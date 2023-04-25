@@ -1,7 +1,7 @@
 from aiogram import Bot, Dispatcher, types, executor, utils
 import wikipedia
 
-bot = Bot(token='TOKEN HERE')
+bot = Bot(token='5540520397:AAFEI9nOttNyJKBVZ7whFIm5qcTekIc0UnY')
 dp = Dispatcher(bot)
 wikipedia.set_lang('ru')
 
