@@ -1,8 +1,9 @@
 from aiogram import Bot, Dispatcher, types, executor, utils
+import dotenv
 import wikipedia
-import dotenv, os
-dotenv.load_dotenv()
+import os
 
+dotenv.load_dotenv()
 Token= os.getenv("Token")
 bot = Bot(Token)
 dp = Dispatcher(bot)
@@ -31,6 +32,7 @@ async def process_message(message: types.Message):
             wikitext = wikitext[0:int(wikitext.rindex("."))]
         await bot.send_message(text=f'Вот что я нашел: {wikitext}',chat_id=chat_id)
         print(f"Поиск по запросу '{to_find}' выполнен успешно ")
+        print(f"Пользователь:{message.from_user}, {message.forward_from_chat}")
     except wikipedia.exceptions.DisambiguationError:
         await bot.send_message(text=f"Я нашел слишком много вариантов по запросу  '{message.text}', попробуйте сформировать запрос точнее",chat_id=chat_id)
         print(f"Поиск по запросу '{to_find}' выполнен с ошибкой 1 ")
@@ -40,7 +42,6 @@ async def process_message(message: types.Message):
     except Exception:
         await message.reply("Извините, произошла какая-то ошибка и я не смог найти информацию по вашему запросу")
         print(f"Поиск по запросу '{to_find}' выполнен с ошибкой -1 ")
-
 
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
